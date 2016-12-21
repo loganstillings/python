@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>What's Up</title>
+    </head>
+    <body>
+        <h1>Hello, {{request.session.user_fname}}</h1>
+
+        <a href="/logout">Logout</a>
+        <h3>Here are your appointments for today, {{today}}:</h3>
+        <table border="1">
+            <thead>
+                <td>Tasks</td>
+                <td>Time</td>
+                <td>Status</td>
+                <td>Actions</td>
+            </thead>
+            <tbody>
+                {% for appointment in appointments_today %}
+                    <tr>
+                        <td>{{appointment.task}}</td>
+                        <td>{{appointment.time}}:00</td>
+                        <td>{{appointment.status}}</td>
+                        {% if appointment.status != "Done" %}
+                            <td><a href="/edit/{{appointment.id}}">Edit</a> | <a href="/delete/{{appointment.id}}">Delete</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4>Your Other appointments:</h4>
+        <table border="1">
+            <thead>
+                <td>Tasks</td>
+                <td>Time</td>
+                <td>Date</td>
+                <td>Actions</td>
+            </thead>
+            <tbody>
+                {% for appointment in other_appointments %}
+                    <tr>
+                        <td>{{appointment.task}}</td>
+                        <td>{{appointment.time}}:00</td>
+                        <td>{{appointment.dated}}</td>
+                        <td><a href="/edit/{{appointment.id}}">Edit</a> | <a href="/delete/{{appointment.id}}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4>Add an appointment:</h4>
+        <form class="" action="/add" method="post">
+            {% csrf_token %}
+            Date: <input type="date" name="date" value="">
+            Time: <select class="" name="time">
+                <option value="0">12:00 AM</option>
+                <option value="1">1:00 AM</option>
+                <option value="2">2:00 AM</option>
+                <option value="3">3:00 AM</option>
+                <option value="4">4:00 AM</option>
+                <option value="5">5:00 AM</option>
+                <option value="6">6:00 AM</option>
+                <option value="7">7:00 AM</option>
+                <option value="8">8:00 AM</option>
+                <option value="9">9:00 AM</option>
+                <option value="10">10:00 AM</option>
+                <option value="11">11:00 AM</option>
+                <option value="12">12:00 PM</option>
+                <option value="13">1:00 PM</option>
+                <option value="14">2:00 PM</option>
+                <option value="15">3:00 PM</option>
+                <option value="16">4:00 PM</option>
+                <option value="17">5:00 PM</option>
+                <option value="18">6:00 PM</option>
+                <option value="19">7:00 PM</option>
+                <option value="20">8:00 PM</option>
+                <option value="21">9:00 PM</option>
+                <option value="22">10:00 PM</option>
+                <option value="23">11:00 PM</option>
+            </select>
+            Tasks:<input type="text" name="tasks" value="">
+            <input type="submit" name="" value="Add Appointments">
+        </form>
+        {% if messages %}
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+    </body>
+</html>

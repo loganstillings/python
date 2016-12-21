@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <h1>Welcome {{ request.session.user_fname }}</h1>
+        <h3>Go to the Appointments Dashboard</h3>
+        <form class="" action="/logout" method="post">
+            {% csrf_token %}
+            <input type="submit" name="" value="log out">
+        </form>
+        <a href="/appointments">Appointment page</a>
+    </body>
+</html>
